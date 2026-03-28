@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <PackageId>DropThe</PackageId>
+    <Version>0.1.0</Version>
+    <Authors>Arnaud Leroy</Authors>
+    <Description>Access open datasets for movies, series, crypto, companies from DropThe.</Description>
+    <PackageProjectUrl>https://dropthe.org</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/arnaudleroy-studio/dropthe-dotnet</RepositoryUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageTags>movies data api</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+</Project>
