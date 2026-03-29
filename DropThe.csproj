@@ -6,14 +6,12 @@
     <PackageId>DropThe</PackageId>
     <Version>0.1.0</Version>
     <Authors>Arnaud Leroy</Authors>
-    <Description>Official .NET client for the DropThe data platform. Access 1.8M+ entities across movies, series, crypto, companies, and a connected knowledge graph. Includes slug generation, tier classification, vertical colors, and entity models.</Description>
+    <Description>Entity modeling, URL generation, and slug utilities for the DropThe knowledge graph covering 1.8M+ entities across movies, series, crypto, companies, and people.</Description>
     <PackageProjectUrl>https://dropthe.org</PackageProjectUrl>
     <RepositoryUrl>https://github.com/arnaudleroy-studio/dropthe-dotnet</RepositoryUrl>
-    <RepositoryType>git</RepositoryType>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageTags>movies;series;data;api;knowledge-graph;crypto;entertainment;media</PackageTags>
+    <PackageTags>dropthe entities knowledge-graph movies series crypto slug</PackageTags>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <Copyright>Copyright (c) 2026 DropThe</Copyright>
   </PropertyGroup>
   <ItemGroup>
     <None Include="README.md" Pack="true" PackagePath="\" />

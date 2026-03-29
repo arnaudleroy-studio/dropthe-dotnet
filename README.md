@@ -1,6 +1,6 @@
-# DropThe .NET Client
+# DropThe .NET
 
-Official .NET library for the [DropThe](https://dropthe.org) data platform -- a data utility media network covering movies, series, cryptocurrencies, companies, and 1.8 million+ entities in a connected knowledge graph.
+Entity modeling, URL generation, and slug utilities for the [DropThe](https://dropthe.org) knowledge graph. DropThe indexes 1.8 million entities across movies, series, cryptocurrencies, companies, and people, connected by nearly 3 million relationship links.
 
 ## Installation
 
@@ -8,120 +8,71 @@ Official .NET library for the [DropThe](https://dropthe.org) data platform -- a 
 dotnet add package DropThe
 ```
 
-Or via the NuGet Package Manager:
-
-```
-Install-Package DropThe
-```
-
 ## Quick Start
 
-```csharp
-using DropThe;
-
-// Access platform metadata
-Console.WriteLine($"Platform: {Info.Organization}");
-Console.WriteLine($"Version:  {Info.Version}");
-Console.WriteLine($"API Base: {Info.ApiBase}");
-
-// List all supported entity types
-foreach (var type in Info.EntityTypes)
-    Console.WriteLine($"  - {type}");
-```
-
-## Features
-
-### Slug Generation
-
-Generate URL-safe slugs that match the format used on dropthe.org:
+Create an entity, generate its canonical URL, and slugify arbitrary text in a few lines:
 
 ```csharp
 using DropThe;
 
-var slug = SlugHelper.GenerateSlug("The Dark Knight Rises");
-// Output: "the-dark-knight-rises"
+// Model an entity from the knowledge graph
+var inception = new Entity(
+    Id: "mov_inception",
+    Name: "Inception",
+    Vertical: Vertical.Movies,
+    Year: 2010);
 
-var url = SlugHelper.BuildEntityUrl("movies", slug);
-// Output: "https://dropthe.org/movies/the-dark-knight-rises/"
+Console.WriteLine(EntityUrl.Detail(inception));
+// => https://dropthe.org/movies/inception-2010
 
-var verticalUrl = SlugHelper.BuildVerticalUrl("coin");
-// Output: "https://dropthe.org/coin/"
+Console.WriteLine(EntityUrl.Hub(Vertical.Crypto));
+// => https://dropthe.org/crypto
+
+Console.WriteLine(EntityUrl.Search("bitcoin", Vertical.Crypto));
+// => https://dropthe.org/search?q=bitcoin&vertical=crypto
 ```
 
-### Tier Classification
+## Slug Generation
 
-DropThe uses a five-tier system (S through D) to classify entity data quality and coverage:
+`SlugHelper.Slugify` handles Unicode normalization, diacritics removal, and whitespace collapsing so you get clean, URL-safe slugs every time:
 
 ```csharp
-using DropThe;
-
-// Get all tier definitions
-foreach (var (tier, desc) in TierSystem.Tiers)
-    Console.WriteLine($"Tier {tier}: {desc}");
-
-// Look up a specific tier
-var description = TierSystem.GetDescription("A");
-// Output: "Excellent - Well-known entities with strong data"
+SlugHelper.Slugify("The Dark Knight Rises");  // "the-dark-knight-rises"
+SlugHelper.Slugify("Cafe Mocha & Espresso");  // "cafe-mocha--espresso"
+SlugHelper.Slugify("  Leading Spaces  ");     // "leading-spaces"
 ```
-
-### Vertical Colors
-
-Access the official brand color palette for each content vertical:
-
-```csharp
-using DropThe;
-
-var techColor = VerticalColors.GetColor("tech");
-// Output: "#007BFF"
-
-var coinColor = VerticalColors.GetColor("coin");
-// Output: "#F7931A"
-
-// Iterate all verticals
-foreach (var (vertical, hex) in VerticalColors.Colors)
-    Console.WriteLine($"{vertical}: {hex}");
-```
-
-### Entity Model
-
-Work with entities from the DropThe knowledge graph:
-
-```csharp
-using DropThe;
-
-var entity = new Entity
-{
-    Id = "abc-123",
-    Name = "Bitcoin",
-    Slug = "bitcoin",
-    Type = "cryptocurrencies"
-};
-
-Console.WriteLine(entity); // Output: "Bitcoin (cryptocurrencies)"
-```
-
-## Data Coverage
-
-The DropThe knowledge graph includes:
-
-| Category | Count |
-|----------|-------|
-| Entities | 1,800,000+ |
-| Entity Links | 2,900,000+ |
-| Movies & Series | 66,000+ |
-| Streaming Records | 685,000+ |
-| Aliases | 80,000+ |
-| Geographic Entities | 2,400+ |
 
 ## Verticals
 
-DropThe organizes content across these verticals: Tech, Coin, Money, Culture, Travel, Data, Gear, Gaming, Health, Series, Stream, and Companies.
+DropThe organizes content into verticals, each with its own hub page and entity namespace:
+
+| Vertical | Hub URL |
+|----------|---------|
+| Movies | `/movies` |
+| Series | `/series` |
+| Crypto | `/crypto` |
+| Companies | `/companies` |
+| People | `/people` |
+| Travel | `/travel` |
+| Tech | `/tech` |
+| Gaming | `/gaming` |
+| Health | `/health` |
+| Gear | `/gear` |
+
+## API Surface
+
+| Type | Description |
+|------|-------------|
+| `Entity` | Immutable record representing a knowledge graph entity |
+| `Vertical` | Enum of supported content verticals |
+| `EntityUrl` | Static methods for building canonical DropThe URLs |
+| `SlugHelper` | Unicode-aware slug generation |
 
 ## Links
 
-- [DropThe Homepage](https://dropthe.org)
+- [DropThe](https://dropthe.org)
 - [Source Code](https://github.com/arnaudleroy-studio/dropthe-dotnet)
-- [Report Issues](https://github.com/arnaudleroy-studio/dropthe-dotnet/issues)
+- [NuGet Package](https://www.nuget.org/packages/DropThe)
 
 ## License
 
